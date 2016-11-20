@@ -1,0 +1,43 @@
+﻿@model IList<TestTask_MessageRemover.Models.MessageModel>
+@using TestTask_MessageRemover.Models
+
+@{
+    ViewBag.Title = "Сообщения";
+}
+
+<h2>Сообщения</h2>
+@using (Html.BeginForm("RemoveMessage", "Message", FormMethod.Post))
+{
+
+    for (int i = 0; i < Model.Count; i++)
+    {
+        <div class="item">
+            <div class="check-block">
+                @Html.EditorFor(m => Model[i].Selected, new { @class = "selector" })
+            </div>
+            <h3>@Model[i].Header</h3>
+
+            @Html.DisplayFor(m => Model[i].Text) 
+
+            @Html.HiddenFor(m => Model[i].MessageID)
+        </div>
+
+    }
+
+    <div class="block">
+        <p><input type="submit" value="Удалить выбранное" /></p>
+    </div>
+}
+
+
+    <div class="block">
+        <h3>Новое сообщение</h3>
+        @using (Html.BeginForm("SendMessage", "Message", FormMethod.Post))
+        {
+            <p>Заголовок</p>
+            @Html.TextBox("Header")
+            <p>Текст сообщения</p>
+            @Html.TextArea("Text")
+            <p><input type="submit" value="Отправить" /></p>
+        }
+    </div>
